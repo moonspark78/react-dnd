@@ -51,7 +51,28 @@ function App() {
 		<div className="App">
 			<h1>Drag and Drop</h1>
 			<DragDropContext onDragEnd={onDragEnd}>
-				
+      <Droppable droppableId="todo">
+					{(provided) => (
+						<div className="todo" {...provided.droppableProps} ref={provided.innerRef}>
+							{todo.map(({ id, name }, index) => {
+								return (
+									<Draggable key={id} draggableId={id} index={index}>
+										{(provided, snapshot) => (
+											<div
+												ref={provided.innerRef}
+												{...provided.draggableProps}
+												{...provided.dragHandleProps}
+												style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+											>
+												{name}
+											</div>
+										)}
+									</Draggable>
+								)
+							})}
+						</div>
+					)}
+				</Droppable>
 			</DragDropContext>
 		</div>
 	)
