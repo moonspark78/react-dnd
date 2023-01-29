@@ -34,6 +34,18 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
 })
 
 function App() {
+  const [ todo, setTodo ] = useState(listItems)
+
+	const onDragEnd = (result: DropResult) => {
+		const { source, destination } = result
+		if (!destination) return
+
+		const items = Array.from(todo)
+		const [ newOrder ] = items.splice(source.index, 1)
+		items.splice(destination.index, 0, newOrder)
+
+		setTodo(items)
+	}
 	
 	return (
 		<div className="App">
